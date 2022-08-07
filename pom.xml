@@ -14,8 +14,8 @@
   <properties>
     <encoding>UTF-8</encoding>
     <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
     <maven.version>3.8.6</maven.version>
     <jdk>17</jdk>
     <org.lwjgl>3.3.1</org.lwjgl>
@@ -35,8 +35,22 @@
     <maven-release-plugin>3.0.0-M6</maven-release-plugin>
     <maven-checkstyle-plugin>3.1.2</maven-checkstyle-plugin>
     <junit>4.13.2</junit>
+    <lwjgl.version>3.3.1</lwjgl.version>
+    <lwjgl3-awt.version>0.1.8</lwjgl3-awt.version>
+    <lwjgl.natives>natives-windows</lwjgl.natives>
+    <org.joml>1.10.4</org.joml>
   </properties>
-
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.lwjgl</groupId>
+        <artifactId>lwjgl-bom</artifactId>
+        <version>${lwjgl.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -44,13 +58,62 @@
       <version>${junit}</version>
       <scope>test</scope>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.lwjgl/lwjgl -->
+    <!-- https://mvnrepository.com/artifact/org.joml/joml -->
+    <dependency>
+      <groupId>org.joml</groupId>
+      <artifactId>joml</artifactId>
+      <version>${org.joml}</version>
+    </dependency>
     <dependency>
       <groupId>org.lwjgl</groupId>
       <artifactId>lwjgl</artifactId>
-      <version>${org.lwjgl}</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-assimp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-bgfx</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-glfw</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-opengl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl</artifactId>
+      <classifier>${lwjgl.natives}</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-assimp</artifactId>
+      <classifier>${lwjgl.natives}</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-bgfx</artifactId>
+      <classifier>${lwjgl.natives}</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-glfw</artifactId>
+      <classifier>${lwjgl.natives}</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-opengl</artifactId>
+      <classifier>${lwjgl.natives}</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjglx</groupId>
+      <artifactId>lwjgl3-awt</artifactId>
+      <version>${lwjgl3-awt.version}</version>
+    </dependency>
   </dependencies>
 
   <reporting>
@@ -63,6 +126,18 @@
   </reporting>
 
   <build>
+    <resources>
+      <resource>
+        <directory>lib</directory>
+        <targetPath>lib</targetPath>
+        <includes>
+          <include>*.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
